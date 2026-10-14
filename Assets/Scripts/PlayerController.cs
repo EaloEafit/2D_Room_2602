@@ -8,10 +8,11 @@ public class PlayerController : MonoBehaviour
     public int score = 0;
     public bool hasKey = false;
     public bool hasWater = false;
-    public TextMeshProUGUI textScore; 
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public TextMeshProUGUI textScore;
+	public TextMeshProUGUI notificationText;
+
+	// Start is called once before the first execution of Update after the MonoBehaviour is created
+	void Start()
     {
         UpdateTextScore();
     }
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(other.gameObject);
             Debug.Log("Collected!");
+            ShowNotification("Collected!");
             score = score + 1;
             UpdateTextScore();
             Debug.Log("Score: " + score);
@@ -43,13 +45,14 @@ public class PlayerController : MonoBehaviour
         {
             hasKey = true;
 			Debug.Log("You got the Key!");
+			ShowNotification("You got the Key!");
 			Destroy(other.gameObject);
 		}
 		if (other.CompareTag("Water"))
 		{
 			hasWater = true;
 			Debug.Log("You has touched the water and cannot win");
-			
+			ShowNotification("You has touched the water and cannot win");
 		}
 
 
@@ -57,6 +60,7 @@ public class PlayerController : MonoBehaviour
 		if (score >= 3 && hasKey == true && !hasWater)
 		{
 			Debug.Log("You Won!");
+			ShowNotification("You Won!");
 		}
 		
 
@@ -64,6 +68,11 @@ public class PlayerController : MonoBehaviour
     void UpdateTextScore ()
     {
         textScore.text = "Score: " + score;
+    }
+
+    void ShowNotification(string message)
+    {
+        notificationText.text = message;
     }
 
 
