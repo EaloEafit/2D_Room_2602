@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -7,11 +8,12 @@ public class PlayerController : MonoBehaviour
     public int score = 0;
     public bool hasKey = false;
     public bool hasWater = false;
+    public TextMeshProUGUI textScore; 
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        UpdateTextScore();
     }
 
     // Update is called once per frame
@@ -32,6 +34,7 @@ public class PlayerController : MonoBehaviour
             Destroy(other.gameObject);
             Debug.Log("Collected!");
             score = score + 1;
+            UpdateTextScore();
             Debug.Log("Score: " + score);
                        
 				
@@ -58,6 +61,11 @@ public class PlayerController : MonoBehaviour
 		
 
 	}
+    void UpdateTextScore ()
+    {
+        textScore.text = "Score: " + score;
+    }
+
 
 
 }
