@@ -30,17 +30,29 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        /* Desactivamos este bloque para reemplazarlo por la nueva lógica
         if(other.CompareTag("Collectable"))
         {
             Destroy(other.gameObject);
             Debug.Log("Collected!");
             ShowNotification("Collected!");
-            score = score + 1;
+            score ++;
             UpdateTextScore();
-            Debug.Log("Score: " + score);
-                       
+            Debug.Log("Score: " + score);           
 				
-		}
+		}*/
+
+        int poinsGained = CalculatePointsByTag(other.tag);
+
+        if (poinsGained > 0)
+        {
+            score += poinsGained;
+            UpdateTextScore();
+            ShowNotification("+" + poinsGained + " points!");
+            Destroy(other.gameObject);
+        }
+
+
 		if (other.CompareTag("Key"))
         {
             hasKey = true;
@@ -75,6 +87,26 @@ public class PlayerController : MonoBehaviour
         notificationText.text = message;
     }
 
+    int CalculatePointsByTag (string objectTag)
+    {
+        if (objectTag == "Collectable")
+        {
+           return 1; 
+        }
+        else if (objectTag == "Collectable2")
+        {
+           return 2; 
+        }
+        else if (objectTag == "Collectable3")
+        {
+           return 3; 
+        }
+        else
+        {
+            return 0;
+        }
+    }
+ 
 
 
 }
